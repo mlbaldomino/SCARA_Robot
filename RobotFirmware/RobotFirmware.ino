@@ -1,9 +1,8 @@
-/*
-   Arduino based SCARA Robot 
-   by Dejan, www.HowToMechatronics.com
-   AccelStepper: http://www.airspayce.com/mikem/arduino/AccelStepper/index.html
+/**
+ * Martha Linares - Arduino based SCARA Robot
+ * base on Dejan Code, www.HowToMechatronics.com
+ */
 
-*/
 #include <AccelStepper.h>
 #include <Servo.h>
 #include <math.h>
@@ -44,15 +43,15 @@ int k = 0;
 
 String content = "";
 /*
- * 0
- * 1
- * 1
- * 3
- * 4
- * 5 - z (heigth)
+ * 0 - save status
+ * 1 - run status
+ * 1 - j1 slider
+ * 3 - j2 slider
+ * 4 - j3 slider
+ * 5 - z slider (heigth)
  * 6 - grip value
- * 7
- * 8
+ * 7 - speed slider
+ * 8 - acceleration slider
  * 9
  */
 int data[10] = { 0 };
