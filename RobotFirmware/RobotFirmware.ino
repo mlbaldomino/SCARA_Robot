@@ -156,15 +156,15 @@ void loop()
     // If RUN button is pressed
     while (data[1] == 1)
     {
-        motorDriver1->setSpeed(data[7]);
-        motorDriver2->setSpeed(data[7]);
-        motorDriver3->setSpeed(data[7]);
-        motorDriver4->setSpeed(data[7]);
+        // // motorDriver1->setSpeed(data[7]);
+        // // motorDriver2->setSpeed(data[7]);
+        // // motorDriver3->setSpeed(data[7]);
+        // // motorDriver4->setSpeed(data[7]);
 
-        motorDriver1->setAcceleration(data[8]);
-        motorDriver2->setAcceleration(data[8]);
-        motorDriver3->setAcceleration(data[8]);
-        motorDriver4->setAcceleration(data[8]);
+        // // motorDriver1->setAcceleration(data[8]);
+        // // motorDriver2->setAcceleration(data[8]);
+        // // motorDriver3->setAcceleration(data[8]);
+        // // motorDriver4->setAcceleration(data[8]);
 
         // execute the stored steps
         for (int i = 0; i <= positionsCounter - 1; i++)
@@ -173,15 +173,23 @@ void loop()
             {
                 break;
             }
+
             motorDriver1->moveTo(theta1Array[i]);
             motorDriver2->moveTo(theta2Array[i]);
             motorDriver3->moveTo(phiArray[i]);
             motorDriver4->moveTo(zArray[i]);
             
-            while (motorDriver1->isMoving()
-                || motorDriver2->isMoving()
-                || motorDriver3->isMoving()
-                || motorDriver4->isMoving());
+            bool move = false;
+            do
+            {
+                move = motorDriver1->isMoving();
+                move |= motorDriver2->isMoving();
+                move |= motorDriver3->isMoving();
+                move |= motorDriver4->isMoving();
+
+                Serial.println("moving");
+            }
+            while (move);
 
             if (i == 0)
             {
@@ -209,16 +217,17 @@ void loop()
                 {
                     break;
                 }
-                // change speed and acceleration while running the program
-                motorDriver1->setSpeed(data[7]);
-                motorDriver2->setSpeed(data[7]);
-                motorDriver3->setSpeed(data[7]);
-                motorDriver4->setSpeed(data[7]);
 
-                motorDriver1->setAcceleration(data[8]);
-                motorDriver2->setAcceleration(data[8]);
-                motorDriver3->setAcceleration(data[8]);
-                motorDriver4->setAcceleration(data[8]);
+                // // change speed and acceleration while running the program
+                // motorDriver1->setSpeed(data[7]);
+                // motorDriver2->setSpeed(data[7]);
+                // motorDriver3->setSpeed(data[7]);
+                // motorDriver4->setSpeed(data[7]);
+
+                // motorDriver1->setAcceleration(data[8]);
+                // motorDriver2->setAcceleration(data[8]);
+                // motorDriver3->setAcceleration(data[8]);
+                // motorDriver4->setAcceleration(data[8]);
             }
         }
         /*
@@ -260,12 +269,12 @@ void loop()
     stepper3Position = data[4] * phiAngleToSteps;
     stepper4Position = data[5] * zDistanceToSteps;
 
-    Serial.println("pos");
+/*    Serial.println("pos");
     Serial.println(stepper1Position);
     Serial.println(stepper2Position);
     Serial.println(stepper3Position);
     Serial.println(stepper4Position);
-    Serial.println();
+    Serial.println();*/
 
   /*  motorDriver1->setSpeed(data[7]);
     motorDriver2->setSpeed(data[7]);
@@ -281,7 +290,6 @@ void loop()
     motorDriver2->moveTo(stepper2Position);
     motorDriver3->moveTo(stepper3Position);
     motorDriver4->moveTo(stepper4Position);
-
 
     bool move = false;
     do
