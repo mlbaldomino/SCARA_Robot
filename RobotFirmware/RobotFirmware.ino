@@ -7,6 +7,8 @@
 #include <Servo.h>
 #include <math.h>
 
+#include "StepperMotorDriver.h"
+
 #define MAX_STEPPER_SPEED 4000
 #define STEPPER_ACCELERATION 2000
 
@@ -17,10 +19,10 @@
 
 // Define the stepper motors and the pins the will use
 // (Type:driver, STEP, DIR)
-AccelStepper stepper1(1, 2, 5);
-AccelStepper stepper2(1, 3, 6);
-AccelStepper stepper3(1, 4, 7);
-AccelStepper stepper4(1, 12, 13);
+AccelStepper stepper1(AccelStepper::DRIVER,  2,  5);
+AccelStepper stepper2(AccelStepper::DRIVER,  3,  6);
+AccelStepper stepper3(AccelStepper::DRIVER,  4,  7);
+AccelStepper stepper4(AccelStepper::DRIVER, 12, 13);
 
 // Create servo object to control a servo
 Servo gripperServo;
@@ -159,7 +161,10 @@ void loop() {
       stepper2.moveTo(theta2Array[i]);
       stepper3.moveTo(phiArray[i]);
       stepper4.moveTo(zArray[i]);
-      while (stepper1.currentPosition() != theta1Array[i] || stepper2.currentPosition() != theta2Array[i] || stepper3.currentPosition() != phiArray[i] || stepper4.currentPosition() != zArray[i]) {
+      while (stepper1.currentPosition() != theta1Array[i] 
+         || stepper2.currentPosition() != theta2Array[i] 
+         || stepper3.currentPosition() != phiArray[i] 
+         || stepper4.currentPosition() != zArray[i]) {
         stepper1.run();
         stepper2.run();
         stepper3.run();
@@ -190,6 +195,7 @@ void loop() {
         stepper2.setSpeed(data[7]);
         stepper3.setSpeed(data[7]);
         stepper4.setSpeed(data[7]);
+
         stepper1.setAcceleration(data[8]);
         stepper2.setAcceleration(data[8]);
         stepper3.setAcceleration(data[8]);
