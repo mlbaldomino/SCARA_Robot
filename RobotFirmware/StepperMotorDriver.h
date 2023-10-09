@@ -14,7 +14,7 @@
 class StepperMotorDriver
 {
   private:
-    AccelStepper *m_stepper;
+    AccelStepper* m_stepper;
 
     uint8_t m_limitSwitchPin;
     long    m_limitPosition;
@@ -28,12 +28,14 @@ class StepperMotorDriver
     ~StepperMotorDriver();
 
   public:
-    StepperMotorDriver* initialize(float speed, long limitPosition);
+    StepperMotorDriver* initialize(long limitPosition);
     StepperMotorDriver* setHome(long homePosition);
     StepperMotorDriver* goHome();
+    StepperMotorDriver* setSpeed(float speed);
+    StepperMotorDriver* setAcceleration(float acceleration);
 
     void moveTo(long absolutePosition);
-    void isMoving();
+    bool isMoving();
 };
 
 #endif

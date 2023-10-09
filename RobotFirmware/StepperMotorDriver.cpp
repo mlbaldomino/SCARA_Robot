@@ -8,7 +8,7 @@ StepperMotorDriver::StepperMotorDriver(uint8_t stepperPin1, uint8_t stepperPin2,
 {
     // Initialize the stepper motor
     m_limitSwitchPin = limitSwitchPin;
-    *m_stepper = AccelStepper(AccelStepper::DRIVER, stepperPin1, stepperPin2);
+    m_stepper = new AccelStepper(AccelStepper::DRIVER, stepperPin1, stepperPin2);
 
     // Set stepper motor max speed
     m_stepper->setMaxSpeed(MAX_STEPPER_SPEED);
@@ -45,13 +45,17 @@ StepperMotorDriver* StepperMotorDriver::initialize(long limitPosition)
 StepperMotorDriver* StepperMotorDriver::setSpeed(float speed)
 {
     m_speed = speed;
-    stepper->setSpeed(m_speed);
+    m_stepper->setSpeed(m_speed);
+
+    return this;
 }
 
 StepperMotorDriver* StepperMotorDriver::setAcceleration(float acceleration)
 {
     m_acceleration = acceleration;
-    stepper->setAcceleration(m_acceleration);
+    m_stepper->setAcceleration(m_acceleration);
+
+    return this;
 }
 
 StepperMotorDriver* StepperMotorDriver::setHome(long homePosition)
@@ -77,12 +81,12 @@ void StepperMotorDriver::moveTo(long absolutePosition)
     m_stepper->moveTo(m_stepperPosition);
 }
 
-void StepperMotorDriver::isMoving()
+bool StepperMotorDriver::isMoving()
 {
     // TODO: Improve this function.
-    auto arrived = m_stepper->currentPosition() != m_stepperPosition;
+    bool arrived = m_stepper->currentPosition() != m_stepperPosition;
 
-    auto isStillRunning = m_stepper->run();
+    bool isStillRunning = m_stepper->run();
 
     return arrived;
 }

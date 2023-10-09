@@ -10,18 +10,22 @@ import static processing.core.PApplet.*;
 Serial myPort;
 ControlP5 cp5; // controlP5 object
 
-int j1Slider = 0;
+int j1Slider = 90;
 int j2Slider = 0;
 int j3Slider = 0;
 int zSlider = 100;
+
 int j1JogValue = 0;
 int j2JogValue = 0;
 int j3JogValue = 0;
 int zJogValue = 0;
+
 int speedSlider = 500;
 int accelerationSlider = 500;
+
 int gripperValue = 180;
-int gripperAdd=180;
+int gripperAdd = 180;
+
 int positionsCounter = 0;
 
 
@@ -32,15 +36,17 @@ int slider1Previous = 0;
 int slider2Previous = 0;
 int slider3Previous = 0;
 int sliderzPrevious = 100;
+
 int speedSliderPrevious = 500;
 int accelerationSliderPrevious = 500;
+
 int gripperValuePrevious = 100;
 
 boolean activeIK = false;
 
-int xP=365;
-int yP=0;
-int zP=100;
+int xP = 0;
+int yP = 365;
+int zP = 100;
 float L1 = 228; // L1 = 228mm
 float L2 = 136.5; // L2 = 136.5mm
 float theta1, theta2, phi, z;
@@ -52,7 +58,7 @@ String data;
 void setup() {
 
   size(960, 800);
-  //myPort = new Serial(this, "COM3", 115200);
+  myPort = new Serial(this, "COM5", 115200);
   
   cp5 = new ControlP5(this);
 
@@ -64,7 +70,7 @@ void setup() {
   cp5.addSlider("j1Slider")
     .setPosition(110, 190)
     .setSize(270, 30)
-    .setRange(-90, 266) // Slider range, corresponds to Joint 1 or theta1 angle that the robot can move to
+    .setRange(0, 180) // Slider range, corresponds to Joint 1 or theta1 angle that the robot can move to
     .setColorLabel(#3269c2)
     .setFont(font)
     .setCaptionLabel("")
